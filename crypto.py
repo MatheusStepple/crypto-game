@@ -33,7 +33,8 @@ def check_all():
     eth = int(get_price("ETH"))
     ltc = int(get_price("LTC"))
     
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nO preço de {amarelob} BITCOIN {azulclaro} atualmente é:  {amarelob}{btc} ${azulclaro}")
+    print("\n" * 30)
+    print(f"O preço de  {amarelob}BITCOIN {azulclaro} atualmente é:  {amarelob}{btc} ${azulclaro}")
     print(f"O preço de  {amarelob}ETH{azulclaro}  atualmente é:  {amarelob}{eth} ${azulclaro}")
     print(f"O preço de  {amarelob}LTC {azulclaro} atualmente é:  {amarelob}{ltc} ${azulclaro}")
     
@@ -51,7 +52,8 @@ def sell():
     ltc = float(get_price("LTC"))
     
     
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nO preço de  {amarelob}BITCOIN{azulclaro}  atualmente é:  {amarelob}{btc} ${azulclaro}")
+    print("\n" * 30)
+    print(f"O preço de  {amarelob}BITCOIN{azulclaro}  atualmente é:  {amarelob}{btc} ${azulclaro}")
     print(f"O preço de  {amarelob}ETHEREUM{azulclaro}  atualmente é:  {amarelob}{eth} ${azulclaro}")
     print(f"O preço de  {amarelob}LITECOIN{azulclaro}  atualmente é:  {amarelob}{ltc} ${azulclaro}")
     print(f"\n\n\n\nvocê tem atualmente: {amarelob}{my_wallet['BTC']} Bitcoin{azulclaro} em sua conta")
@@ -69,13 +71,15 @@ def sell():
             
             
             if my_wallet["BTC"] == 0:
-                print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnão tem {amarelob}{decision}{azulclaro} pra vender")
+                print("\n" * 30)
+                print(f"não tem {amarelob}{decision}{azulclaro} pra vender")
                 a = input(f"\n\npara voltar ao menu digite qualquer coisa\n                     ")
                 menu()
                     
                     
             
-            print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   O preço de  {amarelob}BITCOIN{azulclaro}  atualmente é:  {amarelob}{btc} ${azulclaro}")
+            print("\n" * 30)
+            print(f"O preço de  {amarelob}BITCOIN{azulclaro}  atualmente é:  {amarelob}{btc} ${azulclaro}")
             print(f"   você tem {amarelob}{my_wallet['BTC']} bitcoins{azulclaro} para vender\n\n\n")
             
             venda = int(input("quanto queres vender?  "))
@@ -92,13 +96,15 @@ def sell():
         elif decision.lower() == "eth" or decision.lower() == "ethereum" or decision.lower() == "ether":
             
             if my_wallet["ETH"] == 0:
-                print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnão tem {amarelob}{decision}{azulclaro} pra vender")
+                print("\n" * 30)
+                print("não tem {amarelob}{decision}{azulclaro} pra vender")
                 a = input(f"\n\npara voltar ao menu digite qualquer coisa\n                     ")
                 menu()
                     
                     
             
-            print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   O preço de  {amarelob}ETHEREUM{azulclaro}  atualmente é:  {amarelob}{eth} ${azulclaro}")
+            print("\n" * 30)
+            print(f"     O preço de  {amarelob}ETHEREUM{azulclaro}  atualmente é:  {amarelob}{eth} ${azulclaro}")
             print(f"\n   você tem {amarelob}{my_wallet['ETH']} ETHEREUM{azulclaro} para vender\n\n\n")
             
             venda = int(input("\nquanto queres vender?"))
@@ -106,7 +112,8 @@ def sell():
             if venda > 0 and venda <= my_wallet["ETH"]:
                 my_wallet["ETH"] -= venda
                 dol += eth
-                print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nvocê vendeu {amarelob}{venda} ETHEREUM{azulclaro} a um preço de {amarelob}{eth}{azulclaro} e agora tem {verde}{dol} dólares.{azulclaro}")
+                print("\n" * 30)
+                print(f"você vendeu {amarelob}{venda} ETHEREUM{azulclaro} a um preço de {amarelob}{eth}{azulclaro} e agora tem {verde}{dol} dólares.{azulclaro}")
                 a = input(f"\n\npara voltar ao menu digite qualquer coisa\n                     ")
                 
                 menu()
@@ -125,7 +132,7 @@ def sell():
 def wallet():
    
     
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("\n" * 30)
     
 
     
@@ -151,7 +158,7 @@ def wallet():
     
 def menu():
         
-    print(f"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    print("\n" * 30)
     print(f"{verdeagua}    VOCÊ TEM {verde}{dol} DÓLARES{azulclaro} ")
     print(f"  {verdeagua} QUAL {amarelob}AÇÃO{verdeagua} QUER TOMAR?{azulclaro} \n")
     print(f"{amarelob}1){azulclaro} {verdeagua}CHECKAR OS PREÇOS DAS CRYPTOS{azulclaro}\n")
@@ -172,7 +179,8 @@ def menu():
         
 if __name__ == "__main__":
     while True:
-        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n     BEM VINDO AO SIMULADOR DE CARTEIRA CRYPTO 1.0 BETA  \n")
+        print("\n" * 30)
+        print(f"        BEM VINDO AO SIMULADOR DE CARTEIRA CRYPTO 1.0 BETA  \n")
         print("     VOCÊ QUER COMEÇAR SUA CARTEIRA COM QUANTOS DÓLARES?  \n\n\n")
         try:
             dol = int(input("                       "))
