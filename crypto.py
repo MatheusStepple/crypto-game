@@ -15,42 +15,30 @@ verdeagua = '\033[1;36m'
 
 transaction_history = []
 
-def record_transaction(transaction_type, crypto, amount, price, total_dol):
-    global transaction_history
-    total_dol = -total_dol if transaction_type == "Compra" else total_dol
-    transaction_history.append({
+
+def record_transaction(transaction_type, crypto, amount, price, total_value):
+    transaction = {
         "type": transaction_type,
         "crypto": crypto,
         "amount": amount,
         "price": price,
-        "total_dol": total_dol,
-        "balance_after": dol
-    })
-
+        "total_value": total_value
+    }
+    transaction_history.append(transaction)
+    
 def history():
     os.system('cls' if os.name == 'nt' else 'clear')
     if not transaction_history:
-        print(f"{amarelob}No transactions recorded.{azulclaro}")
+        print(f"{amarelob}No transactions found.{azulclaro}")
     else:
-        print(f"{azulclaro}Transaction History:{azulclaro}")
-        recent_transactions = transaction_history[-5:]
-        for transaction in recent_transactions:
-            transaction_type = transaction['type']
-            crypto = transaction['crypto']
-            amount = transaction['amount']
-            price = transaction['price']
-            total_dol = transaction['total_dol']
-            balance_after = transaction['balance_after']
-            
-            if transaction_type == "Compra":
-                print(f"{amarelob}Buy{azulclaro} | {crypto} | Amount: {amount} | Price: {price} | Total spent: {amarelob}{-total_dol:.2f} dollars{azulclaro}")
-            elif transaction_type == "Venda":
-                print(f"{amarelob}Sell{azulclaro} | {crypto} | Amount: {amount} | Price: {price} | Total earned: {verde}{total_dol:.2f} dollars{azulclaro}")
-            
-            print(f"Balance after transaction: {verde}{balance_after:.2f} dollars{azulclaro}")
-
-    input(f"\n\nPress any key to return to the menu\n")
+        print(f"{verdeagua}Transaction History:{azulclaro}\n")
+        for i, transaction in enumerate(transaction_history, 1):
+            print(f"{i}. {transaction['type']} {amarelob}{transaction['amount']}{azulclaro} {transaction['crypto']} at ${amarelob}{transaction['price']:.2f}{azulclaro} each, total value: ${amarelob}{transaction['total_value']:.2f}{azulclaro}")
+    
+    input(f"{azulclaro}\nPress Enter to continue...")
     menu()
+
+
 
 def get_price(crypto_symbol):
     ticker_url = f"https://api.pro.coinbase.com/products/{crypto_symbol}-USD/ticker"
@@ -63,6 +51,7 @@ def get_price(crypto_symbol):
         print(f"{amarelob}Error getting the price of {crypto_symbol}.{azulclaro}")
         return None
 
+
 def update_wallet(crypto, amount):
     global dol
     price = get_price(crypto)
@@ -71,9 +60,9 @@ def update_wallet(crypto, amount):
     if amount > 0 and amount <= my_wallet[crypto]:
         my_wallet[crypto] -= amount
         dol += price * amount
-        print(f"\nVocê vendeu {amarelob}{amount} {crypto}{azulclaro} a um preço de {amarelob}{price}{azulclaro} e agora tem {verde}{dol:.2f} dólares.{azulclaro}")
+        print(f"\nYou sold {amarelob}{amount} {crypto}{azulclaro} at a price of {amarelob}{price}{azulclaro} and know has {verde}{dol:.2f} dolars.{azulclaro}")
     else:
-        print(f"\n{amarelob}Quantidade inválida ou insuficiente para vender {crypto}.{azulclaro}")
+        print(f"\n{amarelob}Invalid quantity to sell {crypto}.{azulclaro}")
 
 def buy():
     global dol
@@ -113,6 +102,7 @@ def buy():
         if option == "1":
             menu()
             break
+
 
 def check_prices():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -169,6 +159,7 @@ def sell():
             menu()
             break
 
+
 def wallet():
     os.system('cls' if os.name == 'nt' else 'clear')
     
@@ -208,6 +199,7 @@ def wallet():
     input(f"{azulclaro}Press Enter to continue...")
     menu()
 
+
 def reset_game():
     global dol, my_wallet, transaction_history
     dol = 0
@@ -245,9 +237,9 @@ def retire():
     if option == 'yes':
         reset_game()
     else:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print(f"{amarelob}")
-        print("""\
+       os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"{amarelob}")
+    print("""\
 
       _.-^^---....,,--       
  _--                  --_  
@@ -263,26 +255,40 @@ def retire():
 
 
                     """)
-        print(f"\n  CREDITS\n\n")
-        print(f'BETA TESTERS:\n\nMATHEUS "{verde}poohzao{amarelob}" HENRIQUE\n\nPAULO "{verde}caradasluzes{amarelob}" HENRIQUE\n\n\n\n\n\n\n\n\n\n\n')
+    print(f"\n  CREDITS\n\n")
+    print(f'CREATOR:\n\nMATHEUS "{verde}stepple{amarelob}" STEPPLE\n\n')
+    print(f'BETA TESTERS:\n\nMATHEUS "{verde}poohzao{amarelob}" HENRIQUE\n\nPAULO "{verde}caradasluzes{amarelob}" HENRIQUE\n\n\n\n')
+
 
 def menu():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"{verdeagua}You have {verde}{dol:.2f} dollars{azulclaro}")
-    print(f"{verdeagua}What {amarelob}action{verdeagua} would you like to take?{azulclaro}\n")
+    
+    # Mostrar o saldo total em dólares
+    print(f"{verdeagua}You have {verde}{dol:.2f} dollars{azulclaro}\n")
+    
+    for symbol, amount in my_wallet.items():
+        if amount > 0:
+            print(f"{amarelob}{symbol}{azulclaro}: {verde}{amount}{azulclaro}")
+    
+    print(f"\nWhat {amarelob}action{verdeagua} would you like to take?{azulclaro}\n")
     print(f"{amarelob}1){azulclaro} {verdeagua}Check crypto prices{azulclaro}\n")
     print(f"{amarelob}2){azulclaro} {verdeagua}Buy a crypto asset{azulclaro}\n")
-    print(f"{amarelob}3){azulclaro} {verdeagua}Sell a crypto asset{azulclaro}\n")
+    
+    # Mostrar a opção de venda apenas se houver criptomoedas
+    if any(amount > 0 for amount in my_wallet.values()):
+        print(f"{amarelob}3){azulclaro} {verdeagua}Sell a crypto asset{azulclaro}\n")
+    
     print(f"{amarelob}4){azulclaro} {verdeagua}Analyze my crypto wallet{azulclaro}\n")
     print(f"{amarelob}5){azulclaro} {verdeagua}View my transaction history{azulclaro}\n")
     print(f"{amarelob}6){azulclaro} {verdeagua}Retire{azulclaro}\n")
     
     decision = input("Choose an option: ").strip()
+    
     if decision == "1":
         check_prices()
     elif decision == "2":
         buy()
-    elif decision == "3":
+    elif decision == "3" and any(amount > 0 for amount in my_wallet.values()):
         sell()
     elif decision == "4":
         wallet()
@@ -294,6 +300,8 @@ def menu():
         print(f"\n{amarelob}Invalid option.{azulclaro}")
         input(f"{azulclaro}Press Enter to continue...")
         menu()
+
+
 
 
 if __name__ == "__main__":
