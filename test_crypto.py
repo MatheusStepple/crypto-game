@@ -1,4 +1,4 @@
-from crypto import get_action_function, check_prices, buy, sell, wallet, history, retire, check_crypto_exists, can_afford, dol
+from project import get_action_function, check_prices, buy, sell, wallet, history, retire, check_crypto_exists, can_afford, dol
 
 crypto_symbols = ["BTC", "ETH", "LTC", "DOGE", "XRP"]
 
