@@ -3,8 +3,11 @@ import matplotlib.pyplot as plt
 import pyfiglet
 import os
 
+
+
+
 crypto_symbols = ["BTC", "ETH", "LTC", "DOGE", "XRP"]
-dol = 0
+dol = 1000
 my_wallet = {"BTC": 1, "ETH": 0, "LTC": 0}
 
 verde = '\033[1;32m'
@@ -64,6 +67,31 @@ def update_wallet(crypto, amount):
     else:
         print(f"\n{amarelob}Invalid quantity to sell {crypto}.{azulclaro}")
 
+def check_crypto_exists(crypto):
+    """Verifica se a criptomoeda está na lista de criptomoedas disponíveis."""
+    return crypto in crypto_symbols
+
+def can_afford(amount, price):
+    """Verifica se o usuário tem fundos suficientes para a compra."""
+    return amount * price <= dol
+
+def process_purchase(crypto, amount):
+    """Processa a compra da criptomoeda e atualiza o saldo do usuário e o histórico de transações."""
+    global dol
+    price = get_price(crypto)
+    if price is None:
+        print(f"{amarelob}Error retrieving price for {crypto}.{azulclaro}")
+        return
+    
+    cost = amount * price
+    if can_afford(amount, price):
+        my_wallet[crypto] = my_wallet.get(crypto, 0) + amount
+        dol -= cost
+        record_transaction("Buy", crypto, amount, price, cost)
+        print(f"\nYou bought {amarelob}{amount} {crypto}{azulclaro} at a price of {amarelob}${price}{azulclaro} and now have {verde}{dol:.2f} dollars.{azulclaro}")
+    else:
+        print(f"\n{amarelob}You don't have enough dollars to buy {amount} {crypto}.{azulclaro}")
+
 def buy():
     global dol
     while True:
@@ -76,23 +104,13 @@ def buy():
                 print(f"The price of {amarelob}{symbol}{azulclaro} currently is: {amarelob}${price}{azulclaro}")
         
         decision = input("\nWhich cryptocurrency do you want to buy? (BTC/ETH/LTC/DOGE/XRP) ").strip().upper()
-        if decision in crypto_symbols:
+        if check_crypto_exists(decision):
             try:
                 amount_to_buy = float(input(f"How much {decision} do you want to buy? (e.g., 0.1, 1, 2) "))
                 if amount_to_buy <= 0:
                     print(f"\n{amarelob}The amount must be greater than zero.{azulclaro}")
                     continue
-                price = get_price(decision)
-                if price is None:
-                    continue
-                cost = amount_to_buy * price
-                if cost > dol:
-                    print(f"\n{amarelob}You don't have enough dollars to buy {amount_to_buy} {decision}.{azulclaro}")
-                else:
-                    my_wallet[decision] = my_wallet.get(decision, 0) + amount_to_buy
-                    dol -= cost
-                    record_transaction("Buy", decision, amount_to_buy, price, cost)
-                    print(f"\nYou bought {amarelob}{amount_to_buy} {decision}{azulclaro} at a price of {amarelob}${price}{azulclaro} and now have {verde}{dol:.2f} dollars.{azulclaro}")
+                process_purchase(decision, amount_to_buy)
             except ValueError:
                 print(f"\n{amarelob}Invalid input. Please try again.{azulclaro}")
         else:
@@ -102,6 +120,7 @@ def buy():
         if option == "1":
             menu()
             break
+
 
 
 def check_prices():
@@ -260,6 +279,23 @@ def retire():
     print(f'BETA TESTERS:\n\nMATHEUS "{verde}poohzao{amarelob}" HENRIQUE\n\nPAULO "{verde}caradasluzes{amarelob}" HENRIQUE\n\n\n\n')
 
 
+def get_action_function(option):
+   
+    if option == "1":
+        return check_prices
+    elif option == "2":
+        return buy
+    elif option == "3" and any(amount > 0 for amount in my_wallet.values()):
+        return sell
+    elif option == "4":
+        return wallet
+    elif option == "5":
+        return history
+    elif option == "6":
+        return retire
+    else:
+        return None
+
 def menu():
     os.system('cls' if os.name == 'nt' else 'clear')
     
@@ -284,18 +320,10 @@ def menu():
     
     decision = input("Choose an option: ").strip()
     
-    if decision == "1":
-        check_prices()
-    elif decision == "2":
-        buy()
-    elif decision == "3" and any(amount > 0 for amount in my_wallet.values()):
-        sell()
-    elif decision == "4":
-        wallet()
-    elif decision == "5":
-        history()
-    elif decision == "6":
-        retire()
+    action_function = get_action_function(decision)
+    
+    if action_function:
+        action_function()
     else:
         print(f"\n{amarelob}Invalid option.{azulclaro}")
         input(f"{azulclaro}Press Enter to continue...")
