@@ -1,6 +1,6 @@
  # CRYPTO GAME
   #### Video Demo: https://www.youtube.com/watch?v=GG1J5cnt9Eg
-  #### Description: Final project for Harvard University's CS50 Introduction to Programming with Python. Through the use of real-time APIs, players experience the thrill of buying and selling virtual cryptocurrencies based on live exchange rates. The game not only provides a hands-on understanding of cryptocurrency trading but also challenges players to make strategic decisions in a fluctuating market environment.API Documentation
+  #### Description: Final project for Harvard University's CS50 Introduction to Programming with Python. Through the use of real-time APIs, players experience the thrill of buying and selling virtual cryptocurrencies based on live exchange rates. The game not only provides a hands-on understanding of cryptocurrency trading but also challenges players to make strategic decisions in a fluctuating market environment. I initially struggled to find and integrate a cryptocurrency API into my final project. However, once I got it working, I was eager to see the program in action and invited several friends to test out my game. I loved the process, even though it took weeks to complete. I’m now working on this README with help from experienced friends to make it perfect!
 
 
 
