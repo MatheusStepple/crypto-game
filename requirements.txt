@@ -1,3 +1,4 @@
 matplotlib
 pyfiglet
 pytest
+os
